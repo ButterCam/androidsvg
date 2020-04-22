@@ -33,13 +33,13 @@ def  snapshotRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots/
 
 publishing {
     repositories {
-        maven {
-            url = version.endsWith('SNAPSHOT') ? snapshotRepoUrl : releaseRepoUrl
-            credentials {
-                username project.sonatypeUsername
-                password project.sonatypePassword
-            }
-        }
+//        maven {
+//            url = version.endsWith('SNAPSHOT') ? snapshotRepoUrl : releaseRepoUrl
+//            credentials {
+//                username project.sonatypeUsername
+//                password project.sonatypePassword
+//            }
+//        }
     }
 
     publications {

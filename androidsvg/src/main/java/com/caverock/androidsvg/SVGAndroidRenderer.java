@@ -2135,6 +2135,15 @@ class SVGAndroidRenderer
          state.style.fillOpacity = style.fillOpacity;
       }
 
+      if (isSpecified(style, SVG.SPECIFIED_FILL_SHADOW_LAYER))
+      {
+         state.style.fillShadowLayer = style.fillShadowLayer;
+         if (style.fillShadowLayer != null) {
+            state.fillPaint.setShadowLayer(style.fillShadowLayer.radius, style.fillShadowLayer.offsetX,
+                    style.fillShadowLayer.offsetY, style.fillShadowLayer.colour);
+         }
+      }
+
       // If either fill or its opacity has changed, update the fillPaint
       if (isSpecified(style, SVG.SPECIFIED_FILL | SVG.SPECIFIED_FILL_OPACITY | SVG.SPECIFIED_COLOR | SVG.SPECIFIED_OPACITY))
       {

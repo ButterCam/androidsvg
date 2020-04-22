@@ -246,6 +246,7 @@ class SVGParser
       fill,
       fill_rule,
       fill_opacity,
+      fill_shadow_layer,
       font,
       font_family,
       font_size,
@@ -2989,6 +2990,12 @@ Log.d(TAG,"PROC INSTR: "+parser.getText());
                style.specifiedFlags |= SVG.SPECIFIED_FILL_OPACITY;
             break;
 
+         case fill_shadow_layer:
+            style.fillShadowLayer = parseFillShadowLayer(val);
+            if (style.fillShadowLayer != null)
+               style.specifiedFlags |= SVG.SPECIFIED_FILL_SHADOW_LAYER;
+            break;
+
          case stroke:
             style.stroke = parsePaintSpecifier(val);
             if (style.stroke != null)
@@ -3949,6 +3956,22 @@ Log.d(TAG,"PROC INSTR: "+parser.getText());
       if ("evenodd".equals(val))
          return Style.FillRule.EvenOdd;
       return null;
+   }
+
+
+   // Parse fill shadow layer
+   private static SVG.FillShadowLayer parseFillShadowLayer(String val)
+   {
+      // offsetX#offsetY#radius#rgba(1,1,1,0.5)
+      String[] values = val.split("#");
+      if (values.length != 4) return null;
+      try {
+         Colour colour = (Colour) parsePaintSpecifier(values[3]);
+         if (colour == null) return null;
+         return new SVG.FillShadowLayer(colour.colour, Float.parseFloat(values[2]), Float.parseFloat(values[0]), Float.parseFloat(values[1]));
+      } catch (Exception e) {
+         return null;
+      }
    }
 
 
